@@ -1,0 +1,10 @@
+[project]
+name = "steganography"
+version = "0.1.0"
+description = "Solution to the Stack Overflow challenge 18"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "numpy>=2.4.4",
+    "pillow>=12.2.0",
+]
