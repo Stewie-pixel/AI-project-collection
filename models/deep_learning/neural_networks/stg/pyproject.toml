@@ -8,4 +8,5 @@ dependencies = [
     "mnist>=0.2.2",
     "numpy>=2.4.6",
     "requests>=2.34.2",
+    "scikit-learn>=1.8.0",
 ]

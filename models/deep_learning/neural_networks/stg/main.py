@@ -14,14 +14,21 @@ Usage:
 """
 
 import numpy as np
-import mnist   # uv pip install mnist
+from sklearn.datasets import fetch_openml
 
 
 def load_mnist():
-    x_train = mnist.train_images().reshape(-1, 784).astype(np.float64) / 255.0
-    y_train = mnist.train_labels()
-    x_test  = mnist.test_images().reshape(-1, 784).astype(np.float64) / 255.0
-    y_test  = mnist.test_labels()
+    mnist_data = fetch_openml('mnist_784', version=1)
+
+    X = mnist_data.data.to_numpy().astype(np.float64) / 255.0
+    y = mnist_data.target.astype(np.int64).to_numpy()
+
+    x_train = X[:60000]
+    y_train = y[:60000]
+
+    x_test = X[60000:]
+    y_test = y[60000:]
+
     return x_train, y_train, x_test, y_test
 
 def one_hot(y, n=10):
