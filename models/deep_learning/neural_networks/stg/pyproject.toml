@@ -1,0 +1,11 @@
+[project]
+name = "stg"
+version = "0.1.0"
+description = "Stochastic gradient descent network with no hidden layers"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "mnist>=0.2.2",
+    "numpy>=2.4.6",
+    "requests>=2.34.2",
+]
