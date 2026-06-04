@@ -1,25 +1,25 @@
-# Machine Learning Models Collection
+<div align='center'>
 
-A collection of machine learning and deep learning models implemented from scratch and with minimal dependencies for educational purposes.
+## Machine Learning Models Collection
 
-This repository focuses on understanding the mathematics, algorithms, and implementation details behind modern AI systems.
+![Models](https://img.shields.io/badge/Models-100-blue?)
+![Models](https://img.shields.io/github/search/Stewie-pixel/machine-learning-models?query=path%3Amodels&label=Models%20Count&color=blue)
+![GitHub Actions](https://img.shields.io/github/directory-file-count/Stewie-pixel/machine-learning-models/.github/workflows?type=file&label=Total%20Actions&color=orange)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/Stewie-pixel/machine-learning-models?&color=brightgreen)
 
----
+A collection of machine learning and deep learning models trained on big dataset.
 
-# Goals
+</div>
 
-This project is designed to:
 
-- Learn machine learning fundamentals deeply
-- Implement algorithms from scratch
-- Understand neural network mathematics
-- Explore optimization and training techniques
-- Build intuition for AI systems
-- Compare classical ML vs deep learning approaches
+## All Models Collection
 
----
+| No | Project Name | Model | Domain | Project |
+|:---:|---|---|:---:|:---:|
+| 01 | Employee Salary Prediction | Linear Regression + XGBoost | [🚀 Live](https://employee-salary.yourdomain.com) | [![GitHub](https://img.shields.io/badge/GitHub-repo-181717?logo=github&color=e093874)](https://github.com/Stewie-pixel/employee-salary-prediction) |
 
-# Repository Structure
+
+## Repository Structure
 
 ```txt
 machine-learning-models/
@@ -45,273 +45,6 @@ machine-learning-models/
 └── README.md
 ```
 
----
-
-# What is Machine Learning?
-
-Machine Learning (ML) is a field of artificial intelligence where computers learn patterns from data instead of being explicitly programmed.
-
-Traditional programming:
-
-```txt
-Rules + Data → Answers
-```
-
-Machine learning:
-
-```txt
-Data + Answers → Rules
-```
-
-ML systems improve performance by learning from examples.
-
----
-
-# Main Types of Machine Learning
-
-## Supervised Learning
-
-The model learns using labeled data.
-
-Examples:
-
-- Image classification
-- Spam detection
-- Price prediction
-- Sentiment analysis
-
-Algorithms:
-
-- Linear Regression
-- Logistic Regression
-- Support Vector Machines
-- Neural Networks
-
----
-
-## Unsupervised Learning
-
-The model finds hidden patterns without labels.
-
-Examples:
-
-- Clustering
-- Dimensionality reduction
-- Anomaly detection
-
-Algorithms:
-
-- K-Means
-- PCA
-- DBSCAN
-
----
-
-## Reinforcement Learning
-
-An agent learns by interacting with an environment using rewards and penalties.
-
-Examples:
-
-- Game AI
-- Robotics
-- Self-driving systems
-
----
-
-# What is Deep Learning?
-
-Deep Learning is a subset of machine learning based on artificial neural networks with multiple layers.
-
-Instead of manually designing features, deep learning models automatically learn representations directly from data.
-
-Deep learning excels at:
-
-- Computer vision
-- Natural language processing
-- Speech recognition
-- Generative AI
-- Robotics
-
----
-
-# Neural Networks
-
-Artificial neural networks are inspired by biological neurons.
-
-Basic structure:
-
-```txt
-Input Layer → Hidden Layers → Output Layer
-```
-
-Each neuron performs:
-
-```txt
-z = Wx + b
-a = activation(z)
-```
-
-Where:
-
-- `x` = inputs
-- `W` = weights
-- `b` = bias
-- `a` = output activation
-
----
-
-# Deep Learning Architectures
-
-## Feedforward Neural Networks
-
-Basic fully connected networks used for classification and regression.
-
----
-
-## Convolutional Neural Networks (CNNs)
-
-Specialized for image processing.
-
-Used in:
-
-- Object detection
-- Image classification
-- Medical imaging
-
----
-
-## Recurrent Neural Networks (RNNs)
-
-Designed for sequential data.
-
-Used in:
-
-- Text generation
-- Language modeling
-- Time-series forecasting
-
----
-
-## Transformers
-
-Modern architecture powering large language models.
-
-Used in:
-
-- ChatGPT
-- Translation systems
-- Code generation
-- Multimodal AI
-
----
-
-# Mathematical Foundations
-
-This repository explores the mathematics behind AI, including:
-
-- Linear algebra
-- Calculus
-- Probability
-- Optimization
-- Gradient descent
-- Backpropagation
-- Information theory
-
----
-
-# Current Models
-
-| Category | Model | Status |
-|---|---|---|
-| Deep Learning | MNIST Logistic Regression | Complete |
-| Deep Learning | Fully Connected Neural Network | In Progress |
-| Machine Learning | Linear Regression | Planned |
-| Machine Learning | Decision Tree | Planned |
-| Deep Learning | CNN | Planned |
-| Deep Learning | Transformer | Planned |
-
----
-
-# Technologies Used
-
-- Python
-- NumPy
-- Matplotlib
-- Jupyter Notebook
-- PyTorch (future)
-- TensorFlow (future)
-
----
-
-# Running Projects
-
-Each project folder contains its own README with setup instructions.
-
-Example:
-
-```bash
-cd models/deep_learning/neural_networks/stg
-uv run python main.py
-```
-
----
-
-# Educational Philosophy
-
-This repository prioritizes:
-
-- Simplicity
-- Mathematical understanding
-- Clean implementations
-- Minimal abstractions
-- Learning-by-building
-
-Many implementations intentionally avoid high-level frameworks initially to expose the underlying mechanics.
-
----
-
-# Future Goals
-
-- Implement CNNs from scratch
-- Build transformers from scratch
-- Explore diffusion models
-- Add reinforcement learning agents
-- Compare optimizers mathematically
-- Create visual training tools
-- Benchmark models
-
----
-
-# Recommended Learning Path
-
-1. Linear Algebra
-2. Calculus
-3. Probability & Statistics
-4. Classical Machine Learning
-5. Neural Networks
-6. Deep Learning
-7. Transformers
-8. Generative AI
-
----
-
-# References
-
-Books:
-
-- Deep Learning — Ian Goodfellow
-- Neural Networks and Deep Learning — Michael Nielsen
-- Pattern Recognition and Machine Learning — Christopher Bishop
-
-Courses:
-
-- Andrew Ng Machine Learning
-- CS231n Stanford
-- fast.ai
-
----
-
-# License
+## License
 
 MIT License @Stewie-pixel
