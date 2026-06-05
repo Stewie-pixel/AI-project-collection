@@ -4,10 +4,10 @@
 
 ## Machine Learning Models Collection
 
-![Models](https://img.shields.io/badge/Models-100-blue?)
-![Models](https://img.shields.io/github/search/Stewie-pixel/machine-learning-models?query=path%3Amodels&label=Models%20Count&color=blue)
-![GitHub Actions](https://img.shields.io/github/directory-file-count/Stewie-pixel/machine-learning-models/.github/workflows?type=file&label=Total%20Actions&color=orange)
-![GitHub Repo Size](https://img.shields.io/github/repo-size/Stewie-pixel/machine-learning-models?&color=brightgreen)
+[![Deploy Models](https://github.com/Stewie-pixel/AI-project-collection/actions/workflows/deploy-single.yml/badge.svg)](https://github.com/Stewie-pixel/AI-project-collection/actions/workflows/deploy-single.yml)
+[![Models](https://img.shields.io/badge/dynamic/json?label=Models&query=length&url=https://raw.githubusercontent.com/Stewie-pixel/AI-project-collection/main/models.json&color=brightgreen&logo=claude)](https://github.com/Stewie-pixel/AI-project-collection)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/Stewie-pixel/AI-project-collection?&color=brightgreen)
+![License](https://img.shields.io/github/license/Stewie-pixel/AI-project-collection?color=yellow)
 
 A collection of machine learning and deep learning models trained on big dataset.
 
