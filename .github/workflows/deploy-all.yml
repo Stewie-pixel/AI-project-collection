@@ -1,0 +1,20 @@
+name: Deploy All Models
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-all:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy all models
+        run: powershell -File scripts\deploy-all.ps1
+        shell: powershell
+
+      - name: Verify deployments
+        run: kubectl get deployments -A
+        shell: powershell
