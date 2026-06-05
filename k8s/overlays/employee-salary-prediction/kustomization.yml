@@ -1,0 +1,27 @@
+resources:
+  - ../../base
+patches:
+  - patch: |-
+      - op: replace
+        path: /metadata/name
+        value: employee-salary-prediction
+      - op: replace
+        path: /spec/selector/matchLabels/app
+        value: employee-salary-prediction
+      - op: replace
+        path: /spec/template/metadata/labels/app
+        value: employee-salary-prediction
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: edwardes/employee-salary-prediction:latest
+    target:
+      kind: Deployment
+  - patch: |-
+      - op: replace
+        path: /metadata/name
+        value: employee-salary-prediction
+      - op: replace
+        path: /spec/selector/app
+        value: employee-salary-prediction
+    target:
+      kind: Service

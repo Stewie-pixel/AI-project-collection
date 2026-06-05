@@ -5,4 +5,15 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
 spec:
-  rules: []
+  rules:
+  - host: employee-salary.localhost
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: employee-salary-prediction
+              port:
+                number: 80
+
