@@ -18,6 +18,9 @@ on:
         required: true
         default: 'employee-salary'
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: self-hosted
