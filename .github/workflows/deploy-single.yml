@@ -66,7 +66,7 @@ jobs:
           git diff --staged --quiet
           if ($LASTEXITCODE -ne 0) {
             git commit -m "chore: register ${{ github.event.client_payload.model_name || github.event.inputs.model_name }}"
-            git push origin bot/register-${{ github.event.client_payload.model_name || github.event.inputs.model_name }}
+            git push origin bot/register-${{ github.event.client_payload.model_name || github.event.inputs.model_name }} --force
           } else {
             Write-Host "Nothing to commit."
           }
