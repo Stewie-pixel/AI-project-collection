@@ -39,7 +39,7 @@ jobs:
               -DockerImage $image `
               -Subdomain $subdomain
           } else {
-            Write-Host "ℹ️ Model '$model' already registered, skipping add."
+            Write-Host "Model '$model' already registered, skipping add."
           }
         shell: powershell
 
