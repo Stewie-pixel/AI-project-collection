@@ -6,8 +6,8 @@
 
 [![Deploy Models](https://github.com/Stewie-pixel/AI-project-collection/actions/workflows/deploy-single.yml/badge.svg)](https://github.com/Stewie-pixel/AI-project-collection/actions/workflows/deploy-single.yml)
 [![Models](https://img.shields.io/badge/dynamic/json?label=Models&query=length&url=https://raw.githubusercontent.com/Stewie-pixel/AI-project-collection/main/models.json&color=brightgreen&logo=claude)](https://github.com/Stewie-pixel/AI-project-collection)
-![GitHub Repo Size](https://img.shields.io/github/repo-size/Stewie-pixel/AI-project-collection?&color=brightgreen)
-![License](https://img.shields.io/github/license/Stewie-pixel/AI-project-collection?color=yellow)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/Stewie-pixel/AI-project-collection?&color=blue)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 A collection of machine learning and deep learning models trained on big dataset.
 
