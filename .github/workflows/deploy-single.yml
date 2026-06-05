@@ -61,12 +61,34 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.CENTRAL_REPO_TOKEN }}@github.com/Stewie-pixel/AI-project-collection.git
+          git checkout -b bot/register-${{ github.event.client_payload.model_name || github.event.inputs.model_name }}
           git add models.json k8s/
           git diff --staged --quiet
           if ($LASTEXITCODE -ne 0) {
             git commit -m "chore: register ${{ github.event.client_payload.model_name || github.event.inputs.model_name }}"
-            git push
+            git push origin bot/register-${{ github.event.client_payload.model_name || github.event.inputs.model_name }}
           } else {
             Write-Host "Nothing to commit."
           }
+        shell: powershell
+
+      - name: Create and merge Pull Request
+        run: |
+          $branch = "bot/register-${{ github.event.client_payload.model_name || github.event.inputs.model_name }}"
+          $pr = curl -s -X POST `
+            -H "Authorization: token ${{ secrets.CENTRAL_REPO_TOKEN }}" `
+            -H "Accept: application/vnd.github.v3+json" `
+            https://api.github.com/repos/Stewie-pixel/AI-project-collection/pulls `
+            -d "{`"title`":`"chore: register ${{ github.event.client_payload.model_name || github.event.inputs.model_name }}`",`"head`":`"$branch`",`"base`":`"main`",`"body`":`"Automated model registration`"}" | ConvertFrom-Json
+
+          $prNumber = $pr.number
+          Write-Host "PR #$prNumber created"
+
+          curl -s -X PUT `
+            -H "Authorization: token ${{ secrets.CENTRAL_REPO_TOKEN }}" `
+            -H "Accept: application/vnd.github.v3+json" `
+            https://api.github.com/repos/Stewie-pixel/AI-project-collection/pulls/$prNumber/merge `
+            -d "{`"merge_method`":`"squash`"}"
+
+          Write-Host "PR #$prNumber merged"
         shell: powershell
