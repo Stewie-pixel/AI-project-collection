@@ -1,5 +1,7 @@
 <div align='center'>
 
+<img src="./assets/cover.png" height=100>
+
 ## Machine Learning Models Collection
 
 ![Models](https://img.shields.io/badge/Models-100-blue?)
@@ -16,7 +18,7 @@ A collection of machine learning and deep learning models trained on big dataset
 
 | No | Project Name | Model | Domain | Project |
 |:---:|---|---|:---:|:---:|
-| 01 | Employee Salary Prediction | Linear Regression + XGBoost | [🚀 Live](https://employee-salary.yourdomain.com) | [![GitHub](https://img.shields.io/badge/GitHub-repo-181717?logo=github&color=e093874)](https://github.com/Stewie-pixel/employee-salary-prediction) |
+| 01 | Employee Salary Prediction | Linear Regression + XGBoost | [Regression](https://employee-salary.yourdomain.com) | [![GitHub](https://img.shields.io/badge/GitHub-repo-181717?logo=github&color=e093874)](https://github.com/Stewie-pixel/employee-salary-prediction) |
 
 
 ## Repository Structure
