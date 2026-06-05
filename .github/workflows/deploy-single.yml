@@ -57,6 +57,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.CENTRAL_REPO_TOKEN }}@github.com/Stewie-pixel/AI-project-collection.git
           git add models.json k8s/
           git diff --staged --quiet
           if ($LASTEXITCODE -ne 0) {
