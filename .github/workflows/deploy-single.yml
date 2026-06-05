@@ -3,6 +3,20 @@ name: Deploy Single Model
 on:
   repository_dispatch:
     types: [deploy-model]
+  workflow_dispatch:
+    inputs:
+      model_name:
+        description: 'Name of the model'
+        required: true
+        default: 'employee-salary-prediction'
+      docker_image:
+        description: 'Docker image path'
+        required: true
+        default: 'edwardes/employee-salary-prediction:latest'
+      subdomain:
+        description: 'Routing subdomain'
+        required: true
+        default: 'employee-salary'
 
 jobs:
   deploy:
