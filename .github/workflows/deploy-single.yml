@@ -28,25 +28,23 @@ jobs:
 
       - name: Add model to registry
         run: |
-          $model = '${{ github.event.client_payload.model_name }}'
-          $image = '${{ github.event.client_payload.docker_image }}'
-          $subdomain = '${{ github.event.client_payload.subdomain }}'
-
+          $model = '${{ github.event.client_payload.model_name || github.event.inputs.model_name }}'
+          $image = '${{ github.event.client_payload.docker_image || github.event.inputs.docker_image }}'
+          $subdomain = '${{ github.event.client_payload.subdomain || github.event.inputs.subdomain }}'
           $models = Get-Content models.json | ConvertFrom-Json
           $exists = $models | Where-Object { $_.name -eq $model }
-
           if (-not $exists) {
             powershell -File scripts\add-model.ps1 `
               -ModelName $model `
               -DockerImage $image `
               -Subdomain $subdomain
           } else {
-            Write-Host "Model '$model' already registered, skipping add."
+            Write-Host "ℹ️ Model '$model' already registered, skipping add."
           }
         shell: powershell
 
       - name: Deploy model to cluster
-        run: kubectl apply -k "k8s\overlays\${{ github.event.client_payload.model_name }}"
+        run: kubectl apply -k "k8s\overlays\${{ github.event.client_payload.model_name || github.event.inputs.model_name }}"
         shell: powershell
 
       - name: Regenerate and apply ingress
@@ -60,6 +58,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add models.json k8s/
-          git diff --staged --quiet || git commit -m "chore: register ${{ github.event.client_payload.model_name }}"
+          git diff --staged --quiet || git commit -m "chore: register ${{ github.event.client_payload.model_name || github.event.inputs.model_name }}"
           git push
         shell: powershell
