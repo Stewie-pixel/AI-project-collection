@@ -75,35 +75,37 @@ jobs:
       - name: Create and merge Pull Request
         run: |
           $branch = "bot/register-${{ github.event.client_payload.model_name || github.event.inputs.model_name }}"
+          $modelName = "${{ github.event.client_payload.model_name || github.event.inputs.model_name }}"
+
+          $body = @{
+            title = "chore: register $modelName"
+            head  = $branch
+            base  = "main"
+            body  = "Automated model registration"
+          } | ConvertTo-Json
+          $body | Out-File -FilePath "$env:TEMP\pr.json" -Encoding utf8
 
           $response = curl.exe -s -X POST `
             -H "Authorization: token ${{ secrets.CENTRAL_REPO_TOKEN }}" `
             -H "Accept: application/vnd.github.v3+json" `
+            -H "Content-Type: application/json" `
             https://api.github.com/repos/Stewie-pixel/AI-project-collection/pulls `
-            -d "{`"title`":`"chore: register ${{ github.event.client_payload.model_name || github.event.inputs.model_name }}`",`"head`":`"$branch`",`"base`":`"main`",`"body`":`"Automated model registration`"}"
+            --data-binary "@$env:TEMP\pr.json"
 
           Write-Host "PR creation response: $response"
-
           $pr = $response | ConvertFrom-Json
           $prNumber = $pr.number
+          Write-Host "PR #$prNumber created"
 
-          if (-not $prNumber) {
-            Write-Host "PR creation failed. Checking for existing PR..."
-            $existing = curl.exe -s `
-              -H "Authorization: token ${{ secrets.CENTRAL_REPO_TOKEN }}" `
-              -H "Accept: application/vnd.github.v3+json" `
-              "https://api.github.com/repos/Stewie-pixel/AI-project-collection/pulls?head=Stewie-pixel:$branch&state=open"
-            Write-Host "Existing PR response: $existing"
-            $prNumber = ($existing | ConvertFrom-Json)[0].number
-          }
-
-          Write-Host "PR #$prNumber"
+          $mergeBody = @{ merge_method = "squash" } | ConvertTo-Json
+          $mergeBody | Out-File -FilePath "$env:TEMP\merge.json" -Encoding utf8
 
           curl.exe -s -X PUT `
             -H "Authorization: token ${{ secrets.CENTRAL_REPO_TOKEN }}" `
             -H "Accept: application/vnd.github.v3+json" `
+            -H "Content-Type: application/json" `
             https://api.github.com/repos/Stewie-pixel/AI-project-collection/pulls/$prNumber/merge `
-            -d "{`"merge_method`":`"squash`"}"
+            --data-binary "@$env:TEMP\merge.json"
 
           Write-Host "PR #$prNumber merged"
         shell: powershell
