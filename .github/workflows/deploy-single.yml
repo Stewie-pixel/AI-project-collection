@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       model_name:
-        description: 'Name of the model'
+        description: 'Repo/folder name'
         required: true
         default: 'employee-salary-prediction'
       docker_image:
@@ -17,6 +17,38 @@ on:
         description: 'Routing subdomain'
         required: true
         default: 'employee-salary'
+      title:
+        description: 'Display name'
+        required: true
+        default: 'Employee Salary Prediction'
+      models:
+        description: 'Algorithm(s) used'
+        required: true
+        default: 'Linear Regression + XGBoost'
+      domain:
+        description: 'ML domain'
+        required: true
+        default: 'Regression'
+      accuracy:
+        description: 'Model accuracy'
+        required: false
+        default: ''
+      tags:
+        description: 'Comma separated tags'
+        required: false
+        default: 'Regression,Tabular'
+      github:
+        description: 'Child repo URL'
+        required: true
+        default: 'https://github.com/Stewie-pixel/employee-salary-prediction'
+      hf_space:
+        description: 'Hugging Face Space URL'
+        required: true
+        default: 'https://huggingface.co/spaces/Stewie-pixel/employee-salary-prediction'
+      status:
+        description: 'Model status'
+        required: false
+        default: 'pending'
 
 permissions:
   contents: write
@@ -31,29 +63,30 @@ jobs:
 
       - name: Add model to registry
         run: |
-          $model = '${{ github.event.client_payload.model_name || github.event.inputs.model_name }}'
-          $image = '${{ github.event.client_payload.docker_image || github.event.inputs.docker_image }}'
+          $model     = '${{ github.event.client_payload.model_name || github.event.inputs.model_name }}'
+          $image     = '${{ github.event.client_payload.docker_image || github.event.inputs.docker_image }}'
           $subdomain = '${{ github.event.client_payload.subdomain || github.event.inputs.subdomain }}'
-          $models = Get-Content models.json | ConvertFrom-Json
-          $exists = $models | Where-Object { $_.name -eq $model }
-          if (-not $exists) {
-            powershell -File scripts\add-model.ps1 `
-              -ModelName $model `
-              -DockerImage $image `
-              -Subdomain $subdomain
-          } else {
-            Write-Host "Model '$model' already registered, skipping add."
-          }
-        shell: powershell
+          $title     = '${{ github.event.client_payload.title || github.event.inputs.title }}'
+          $models    = '${{ github.event.client_payload.models || github.event.inputs.models }}'
+          $domain    = '${{ github.event.client_payload.domain || github.event.inputs.domain }}'
+          $accuracy  = '${{ github.event.client_payload.accuracy || github.event.inputs.accuracy }}'
+          $tags      = '${{ github.event.client_payload.tags || github.event.inputs.tags }}'
+          $github    = '${{ github.event.client_payload.github || github.event.inputs.github }}'
+          $hfSpace   = '${{ github.event.client_payload.hf_space || github.event.inputs.hf_space }}'
+          $status    = '${{ github.event.client_payload.status || github.event.inputs.status }}'
 
-      - name: Deploy model to cluster
-        run: kubectl apply -k "k8s\overlays\${{ github.event.client_payload.model_name || github.event.inputs.model_name }}"
-        shell: powershell
-
-      - name: Regenerate and apply ingress
-        run: |
-          powershell -File scripts\generate-ingress.ps1
-          kubectl apply -f k8s\ingress\ingress.yml
+          powershell -File scripts\add-model.ps1 `
+            -ModelName  $model `
+            -DockerImage $image `
+            -Subdomain  $subdomain `
+            -Title      $title `
+            -Models     $models `
+            -Domain     $domain `
+            -Accuracy   $accuracy `
+            -Tags       $tags `
+            -Github     $github `
+            -HfSpace    $hfSpace `
+            -Status     $status
         shell: powershell
 
       - name: Commit updated models.json
@@ -80,29 +113,23 @@ jobs:
             "Authorization" = "token ${{ secrets.CENTRAL_REPO_TOKEN }}"
             "Accept" = "application/vnd.github.v3+json"
           }
-
           $prBody = @{
             title = "chore: register $modelName"
             head  = $branch
             base  = "main"
             body  = "Automated model registration"
           }
-
           $pr = Invoke-RestMethod -Uri "https://api.github.com/repos/Stewie-pixel/AI-project-collection/pulls" `
             -Method POST `
             -Headers $headers `
             -Body ($prBody | ConvertTo-Json) `
             -ContentType "application/json"
-
           Write-Host "PR #$($pr.number) created"
-
           $mergeBody = @{ merge_method = "squash" }
-
           Invoke-RestMethod -Uri "https://api.github.com/repos/Stewie-pixel/AI-project-collection/pulls/$($pr.number)/merge" `
             -Method PUT `
             -Headers $headers `
             -Body ($mergeBody | ConvertTo-Json) `
             -ContentType "application/json"
-
           Write-Host "PR #$($pr.number) merged"
         shell: powershell

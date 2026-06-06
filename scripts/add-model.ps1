@@ -1,46 +1,43 @@
 param(
     [Parameter(Mandatory)][string]$ModelName,
     [Parameter(Mandatory)][string]$DockerImage,
-    [Parameter(Mandatory)][string]$Subdomain
+    [Parameter(Mandatory)][string]$Subdomain,
+    [Parameter(Mandatory)][string]$Title,
+    [Parameter(Mandatory)][string]$Models,
+    [Parameter(Mandatory)][string]$Domain,
+    [string]$Accuracy = "",
+    [string]$Tags = "",
+    [Parameter(Mandatory)][string]$Github,
+    [Parameter(Mandatory)][string]$HfSpace,
+    [string]$Status = "pending"
 )
 
 $models = Get-Content models.json | ConvertFrom-Json
-$models += @{ name = $ModelName; image = $DockerImage; subdomain = $Subdomain }
-$models | ConvertTo-Json -Depth 3 | Set-Content models.json
 
-$overlayPath = "k8s\overlays\$ModelName"
-New-Item -ItemType Directory -Force -Path $overlayPath | Out-Null
+$exists = $models | Where-Object { $_.name -eq $ModelName }
 
-$kustomization = @"
-resources:
-  - ../../base
-patches:
-  - patch: |-
-      - op: replace
-        path: /metadata/name
-        value: $ModelName
-      - op: replace
-        path: /spec/selector/matchLabels/app
-        value: $ModelName
-      - op: replace
-        path: /spec/template/metadata/labels/app
-        value: $ModelName
-      - op: replace
-        path: /spec/template/spec/containers/0/image
-        value: $DockerImage
-    target:
-      kind: Deployment
-  - patch: |-
-      - op: replace
-        path: /metadata/name
-        value: $ModelName
-      - op: replace
-        path: /spec/selector/app
-        value: $ModelName
-    target:
-      kind: Service
-"@
+if ($exists) {
+    Write-Host "Model '$ModelName' already registered, skipping."
+    exit 0
+}
 
-$kustomization | Set-Content "$overlayPath\kustomization.yml"
+$tagsArray = if ($Tags) { $Tags -split "," | ForEach-Object { $_.Trim() } } else { @() }
 
-Write-Host "Model '$ModelName' added successfully."
+$entry = @{
+    name      = $ModelName
+    title     = $Title
+    models    = $Models
+    domain    = $Domain
+    accuracy  = $Accuracy
+    tags      = $tagsArray
+    status    = $Status
+    github    = $Github
+    hf_space  = $HfSpace
+    image     = $DockerImage
+    subdomain = $Subdomain
+}
+
+$models += $entry
+ConvertTo-Json -InputObject @($models) -Depth 5 | Set-Content models.json
+
+Write-Host "Model '$ModelName' registered successfully."
