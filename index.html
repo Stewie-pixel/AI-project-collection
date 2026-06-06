@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ML Models Collection — Stewie-pixel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-2: #111111;
+      --bg-3: #181818;
+      --border: rgba(255,255,255,0.07);
+      --border-2: rgba(255,255,255,0.13);
+      --text: #f0ede8;
+      --text-2: #888880;
+      --text-3: #555550;
+      --accent: #f0ede8;
+      --green: #1D9E75;
+      --green-bg: rgba(29,158,117,0.1);
+      --amber: #EF9F27;
+      --amber-bg: rgba(239,159,39,0.1);
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; }
+    body { min-height: 100vh; }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap { max-width: 960px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+
+    /* Header */
+    .site-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 3.5rem; }
+    .site-logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--text); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-icon i { font-size: 20px; color: var(--bg); }
+    .logo-title { font-size: 16px; font-weight: 500; letter-spacing: -0.01em; }
+    .logo-sub { font-size: 12px; color: var(--text-2); font-family: var(--mono); margin-top: 1px; }
+    .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .gh-link { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-2); border: 0.5px solid var(--border-2); border-radius: 6px; padding: 5px 10px; transition: color 0.15s, border-color 0.15s; }
+    .gh-link:hover { color: var(--text); border-color: var(--border-2); }
+    .gh-link i { font-size: 14px; }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 3rem; }
+    .stat { background: var(--bg-2); border: 0.5px solid var(--border); border-radius: 10px; padding: 1.1rem 1.25rem; }
+    .stat-label { font-size: 11px; color: var(--text-2); font-family: var(--mono); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .stat-label i { font-size: 13px; }
+    .stat-value { font-size: 28px; font-weight: 300; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
+    .stat-sub { font-size: 11px; color: var(--text-3); margin-top: 4px; font-family: var(--mono); }
+
+    /* Progress bar */
+    .progress-wrap { margin-bottom: 3rem; }
+    .progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .progress-label { font-size: 11px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-2); }
+    .progress-count { font-size: 11px; font-family: var(--mono); color: var(--text-3); }
+    .progress-track { background: var(--bg-3); border-radius: 20px; height: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 20px; background: var(--text); transition: width 1.2s cubic-bezier(0.16,1,0.3,1); width: 0; }
+
+    /* Filters */
+    .section-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+    .section-label { font-size: 11px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-2); }
+    .filters { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-btn { font-size: 11px; font-family: var(--mono); padding: 4px 12px; border-radius: 20px; border: 0.5px solid var(--border-2); background: transparent; color: var(--text-2); cursor: pointer; transition: all 0.15s; }
+    .filter-btn:hover { color: var(--text); border-color: var(--border-2); }
+    .filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    /* Grid */
+    .models-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+    /* Model Card */
+    .model-card { background: var(--bg-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem; transition: border-color 0.2s; display: flex; flex-direction: column; }
+    .model-card:hover { border-color: var(--border-2); }
+
+    .card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .card-num { font-size: 11px; font-family: var(--mono); color: var(--text-3); }
+
+    .status { display: flex; align-items: center; gap: 5px; font-size: 11px; font-family: var(--mono); }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .status--live .status-dot { background: var(--green); }
+    .status--live .status-text { color: var(--green); }
+    .status--building .status-dot { background: var(--amber); animation: pulse 1.5s infinite; }
+    .status--building .status-text { color: var(--amber); }
+    .status--pending .status-dot { background: var(--text-3); }
+    .status--pending .status-text { color: var(--text-3); }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+    .card-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 3px; letter-spacing: -0.01em; }
+    .card-algo { font-size: 12px; color: var(--text-2); margin-bottom: 14px; }
+
+    .card-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
+    .tag { font-size: 10px; font-family: var(--mono); padding: 2px 8px; border-radius: 4px; border: 0.5px solid var(--border-2); color: var(--text-2); }
+    .tag--domain { border-color: rgba(29,158,117,0.3); color: var(--green); background: var(--green-bg); }
+
+    .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 0.5px solid var(--border); margin-top: auto; }
+    .card-links { display: flex; gap: 6px; }
+    .card-link { font-size: 11px; font-family: var(--mono); color: var(--text-2); display: flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 5px; border: 0.5px solid var(--border); transition: all 0.15s; }
+    .card-link:hover { color: var(--text); border-color: var(--border-2); }
+    .card-link i { font-size: 12px; }
+
+    .card-acc { text-align: right; }
+    .acc-val { font-size: 16px; font-weight: 500; color: var(--text); font-family: var(--mono); }
+    .acc-label { font-size: 10px; color: var(--text-3); font-family: var(--mono); }
+
+    /* Empty card */
+    .empty-card { background: transparent; border: 0.5px dashed var(--border); border-radius: 12px; padding: 1.25rem; min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+    .empty-num { font-size: 11px; font-family: var(--mono); color: var(--text-3); }
+    .empty-icon { font-size: 18px; color: var(--text-3); opacity: 0.3; }
+
+    /* Domain summary */
+    .domains { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 2.5rem; }
+    .domain-pill { display: flex; align-items: center; gap: 7px; font-size: 11px; font-family: var(--mono); padding: 6px 12px; border-radius: 20px; border: 0.5px solid var(--border); color: var(--text-2); }
+    .domain-pill i { font-size: 13px; }
+    .domain-pill .pill-n { color: var(--text); font-weight: 500; }
+
+    /* Footer */
+    .site-footer { margin-top: 5rem; padding-top: 2rem; border-top: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: 11px; font-family: var(--mono); color: var(--text-3); }
+    .footer-right { font-size: 11px; font-family: var(--mono); color: var(--text-3); }
+
+    /* Loading state */
+    .loading { text-align: center; padding: 4rem; font-size: 12px; font-family: var(--mono); color: var(--text-3); }
+
+    @media (max-width: 640px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .models-grid { grid-template-columns: 1fr; }
+      .site-header { flex-direction: column; gap: 1rem; }
+      .header-right { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <div class="site-logo">
+        <div class="logo-icon"><i class="ti ti-brain"></i></div>
+        <div>
+          <div class="logo-title">ML Models Collection</div>
+          <div class="logo-sub">Stewie-pixel / AI-project-collection</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <a class="gh-link" href="https://github.com/Stewie-pixel/AI-project-collection" target="_blank">
+          <i class="ti ti-brand-github"></i> AI-project-collection
+        </a>
+      </div>
+    </header>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label"><i class="ti ti-cpu"></i> Total models</div>
+        <div class="stat-value" id="stat-total">—</div>
+        <div class="stat-sub">of 100 target</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label"><i class="ti ti-circle-check"></i> Live</div>
+        <div class="stat-value" id="stat-live">—</div>
+        <div class="stat-sub">on Hugging Face</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label"><i class="ti ti-chart-dots"></i> Domains</div>
+        <div class="stat-value" id="stat-domains">—</div>
+        <div class="stat-sub">unique areas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label"><i class="ti ti-rocket"></i> Progress</div>
+        <div class="stat-value" id="stat-pct">—</div>
+        <div class="stat-sub">to 100 models</div>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span class="progress-label">Overall progress</span>
+        <span class="progress-count" id="prog-label">0 / 100</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="prog-fill"></div>
+      </div>
+    </div>
+
+    <div class="section-bar">
+      <span class="section-label">Models</span>
+      <div class="filters" id="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+      </div>
+    </div>
+
+    <div id="grid-root" class="models-grid">
+      <div class="loading">Loading models...</div>
+    </div>
+
+    <div class="domains" id="domains-root"></div>
+
+    <footer class="site-footer">
+      <span class="footer-copy">MIT License &copy; Stewie-pixel</span>
+      <span class="footer-right" id="footer-updated"></span>
+    </footer>
+  </div>
+
+  <script>
+    const TOTAL_TARGET = 100;
+    const PLACEHOLDER_COUNT = 4;
+
+    const DOMAIN_ICONS = {
+      'Regression': 'ti-chart-line',
+      'Classification': 'ti-tags',
+      'Deep Learning': 'ti-brain',
+      'Computer Vision': 'ti-eye',
+      'NLP': 'ti-message',
+      'Clustering': 'ti-circles',
+      'Time Series': 'ti-timeline',
+      'Reinforcement Learning': 'ti-robot',
+    };
+
+    function statusClass(s) {
+      if (s === 'live') return 'status--live';
+      if (s === 'building') return 'status--building';
+      return 'status--pending';
+    }
+
+    function statusLabel(s) {
+      if (s === 'live') return 'Live';
+      if (s === 'building') return 'Building';
+      return 'Pending';
+    }
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function renderCard(m, idx) {
+      const num = pad(idx + 1);
+      const tags = (m.tags || []).map(t =>
+        `<span class="tag ${t === m.domain ? 'tag--domain' : ''}">${t}</span>`
+      ).join('');
+      const repoLink = m.github
+        ? `<a class="card-link" href="${m.github}" target="_blank"><i class="ti ti-brand-github"></i> Repo</a>`
+        : '';
+      const spaceLink = m.hf_space
+        ? `<a class="card-link" href="${m.hf_space}" target="_blank"><i class="ti ti-external-link"></i> Space</a>`
+        : '';
+      const acc = m.accuracy
+        ? `<div class="card-acc"><div class="acc-val">${m.accuracy}</div><div class="acc-label">accuracy</div></div>`
+        : '';
+
+      return `
+        <div class="model-card" data-domain="${m.domain || ''}">
+          <div class="card-head">
+            <span class="card-num">No. ${num}</span>
+            <div class="status ${statusClass(m.status)}">
+              <div class="status-dot"></div>
+              <span class="status-text">${statusLabel(m.status)}</span>
+            </div>
+          </div>
+          <div class="card-title">${m.title || m.name}</div>
+          <div class="card-algo">${m.models || m.image || ''}</div>
+          <div class="card-tags">${tags}</div>
+          <div class="card-footer">
+            <div class="card-links">${repoLink}${spaceLink}</div>
+            ${acc}
+          </div>
+        </div>`;
+    }
+
+    function renderEmpty(idx) {
+      return `
+        <div class="empty-card">
+          <span class="empty-num">No. ${pad(idx + 1)}</span>
+          <i class="ti ti-plus empty-icon"></i>
+        </div>`;
+    }
+
+    function renderDomains(models) {
+      const counts = {};
+      models.forEach(m => {
+        if (m.domain) counts[m.domain] = (counts[m.domain] || 0) + 1;
+      });
+      return Object.entries(counts).map(([domain, count]) => {
+        const icon = DOMAIN_ICONS[domain] || 'ti-cpu';
+        return `<div class="domain-pill"><i class="ti ${icon}"></i>${domain} <span class="pill-n">${count}</span></div>`;
+      }).join('');
+    }
+
+    function renderFilters(models) {
+      const domains = [...new Set(models.map(m => m.domain).filter(Boolean))];
+      const el = document.getElementById('filters');
+      domains.forEach(d => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.filter = d;
+        btn.textContent = d;
+        el.appendChild(btn);
+      });
+
+      el.addEventListener('click', e => {
+        if (!e.target.classList.contains('filter-btn')) return;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        const f = e.target.dataset.filter;
+        document.querySelectorAll('.model-card').forEach(card => {
+          card.style.display = (f === 'all' || card.dataset.domain === f) ? '' : 'none';
+        });
+        document.querySelectorAll('.empty-card').forEach(card => {
+          card.style.display = f === 'all' ? '' : 'none';
+        });
+      });
+    }
+
+    async function init() {
+      let models = [];
+      try {
+        const res = await fetch('./models.json');
+        models = await res.json();
+      } catch (e) {
+        console.warn('Could not load models.json', e);
+      }
+
+      const total = models.length;
+      const live = models.filter(m => m.status === 'live').length;
+      const domains = new Set(models.map(m => m.domain).filter(Boolean)).size;
+      const pct = Math.round((total / TOTAL_TARGET) * 100);
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-live').textContent = live;
+      document.getElementById('stat-domains').textContent = domains;
+      document.getElementById('stat-pct').textContent = pct + '%';
+      document.getElementById('prog-label').textContent = `${total} / ${TOTAL_TARGET}`;
+      document.getElementById('footer-updated').textContent = `Updated ${new Date().toLocaleDateString('en-AU', { day:'numeric', month:'short', year:'numeric' })}`;
+
+      setTimeout(() => {
+        const fill = document.getElementById('prog-fill');
+        if (fill) fill.style.width = Math.max(pct, 0.5) + '%';
+      }, 200);
+
+      const grid = document.getElementById('grid-root');
+      const cards = models.map((m, i) => renderCard(m, i));
+      const placeholders = Array.from({ length: PLACEHOLDER_COUNT }, (_, i) => renderEmpty(total + i));
+      grid.innerHTML = [...cards, ...placeholders].join('');
+
+      document.getElementById('domains-root').innerHTML = renderDomains(models);
+
+      renderFilters(models);
+    }
+
+    init();
+  </script>
+</body>
+</html>
