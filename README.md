@@ -18,7 +18,7 @@ A collection of machine learning and deep learning models trained on big dataset
 
 | No | Project Name | Model | Domain | Accuracy | Project |
 |:---:|---|---|:---:|:---:|---|
-| 01 | Employee Salary Prediction | Linear Regression + XGBoost | [Regression](https://employee-salary.yourdomain.com) | ~92% | [![GitHub](https://img.shields.io/badge/GitHub-repo-181717?logo=github&color=e093874)](https://github.com/Stewie-pixel/employee-salary-prediction) |
+| 01 | Employee Salary Prediction | Linear Regression + XGBoost | [Regression](https://huggingface.co/spaces/Stewie-pixel/employee-salary-prediction) | ~92% | [![GitHub](https://img.shields.io/badge/GitHub-repo-181717?logo=github&color=e093874)](https://github.com/Stewie-pixel/employee-salary-prediction) |
 
 
 ## Repository Structure
