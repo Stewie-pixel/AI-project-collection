@@ -1,0 +1,27 @@
+resources:
+  - ../../base
+patches:
+  - patch: |-
+      - op: replace
+        path: /metadata/name
+        value: titanic-survival-prediction
+      - op: replace
+        path: /spec/selector/matchLabels/app
+        value: titanic-survival-prediction
+      - op: replace
+        path: /spec/template/metadata/labels/app
+        value: titanic-survival-prediction
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: edwardes/titanic-survival-prediction:latest
+    target:
+      kind: Deployment
+  - patch: |-
+      - op: replace
+        path: /metadata/name
+        value: titanic-survival-prediction
+      - op: replace
+        path: /spec/selector/app
+        value: titanic-survival-prediction
+    target:
+      kind: Service
