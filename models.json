@@ -23,7 +23,7 @@
         "domain":  "Classification",
         "accuracy":  "~82%",
         "tags":  [
-                     "Regression",
+                     "Classification",
                      "Tabular",
                      "Ensemble"
                  ],
