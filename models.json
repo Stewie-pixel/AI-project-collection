@@ -1,15 +1,36 @@
-﻿[
-  {
-    "name": "employee-salary-prediction",
-    "title": "Employee Salary Prediction",
-    "models": "Linear Regression + XGBoost",
-    "domain": "Regression",
-    "accuracy": "~92%",
-    "tags": ["Regression", "Tabular", "Ensemble"],
-    "status": "live",
-    "github": "https://github.com/Stewie-pixel/employee-salary-prediction",
-    "hf_space": "https://huggingface.co/spaces/Stewie-pixel/employee-salary-prediction",
-    "image": "edwardes/employee-salary-prediction:latest",
-    "subdomain": "employee-salary"
-  }
+[
+    {
+        "name":  "employee-salary-prediction",
+        "title":  "Employee Salary Prediction",
+        "models":  "Linear Regression + XGBoost",
+        "domain":  "Regression",
+        "accuracy":  "~92%",
+        "tags":  [
+                     "Regression",
+                     "Tabular",
+                     "Ensemble"
+                 ],
+        "status":  "live",
+        "github":  "https://github.com/Stewie-pixel/employee-salary-prediction",
+        "hf_space":  "https://huggingface.co/spaces/Stewie-pixel/employee-salary-prediction",
+        "image":  "edwardes/employee-salary-prediction:latest",
+        "subdomain":  "employee-salary"
+    },
+    {
+        "name":  "titanic-survival-prediction",
+        "title":  "Titanic Survival Prediction",
+        "models":  "Random Forest + XGBoost",
+        "domain":  "Classification",
+        "accuracy":  "~82%",
+        "tags":  [
+                     "Regression",
+                     "Tabular",
+                     "Ensemble"
+                 ],
+        "status":  "live",
+        "github":  "https://github.com/Stewie-pixel/titanic-survival-prediction",
+        "hf_space":  "https://huggingface.co/spaces/Stewie-pixel/titanic-survival-prediction",
+        "image":  "edwardes/titanic-survival-prediction:latest",
+        "subdomain":  "titanic-survival"
+    }
 ]
