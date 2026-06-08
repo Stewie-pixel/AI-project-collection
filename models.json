@@ -1,15 +1,3 @@
 [
-  {
-    "name": "employee-salary-prediction",
-    "title": "Employee Salary Prediction",
-    "models": "Linear Regression + XGBoost",
-    "domain": "Regression",
-    "accuracy": "~92%",
-    "tags": ["Regression", "Tabular", "Ensemble"],
-    "status": "live",
-    "github": "https://github.com/Stewie-pixel/employee-salary-prediction",
-    "hf_space": "https://huggingface.co/spaces/Stewie-pixel/employee-salary-prediction",
-    "image": "edwardes/employee-salary-prediction:latest",
-    "subdomain": "employee-salary"
-  }
+    "System.Object[]System.Collections.Hashtable"
 ]
