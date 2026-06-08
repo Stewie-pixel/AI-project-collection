@@ -12,7 +12,7 @@ param(
     [string]$Status = "pending"
 )
 
-$models = @(Get-Content models.json | ConvertFrom-Json)
+$models = @(Get-Content models.json | ConvertFrom-Json -AsHashtable)
 
 $exists = $models | Where-Object { $_.name -eq $ModelName }
 
