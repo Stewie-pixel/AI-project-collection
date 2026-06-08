@@ -1,5 +1,5 @@
 [
-{
+  {
     "name": "employee-salary-prediction",
     "title": "Employee Salary Prediction",
     "models": "Linear Regression + XGBoost",

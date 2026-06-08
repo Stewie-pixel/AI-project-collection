@@ -12,7 +12,7 @@ param(
     [string]$Status = "pending"
 )
 
-$models = @(Get-Content models.json | ConvertFrom-Json -AsHashtable)
+$models = @(Get-Content models.json -Raw | ConvertFrom-Json)
 
 $exists = $models | Where-Object { $_.name -eq $ModelName }
 
@@ -23,7 +23,7 @@ if ($exists) {
 
 $tagsArray = if ($Tags) { $Tags -split "," | ForEach-Object { $_.Trim() } } else { @() }
 
-$entry = @{
+$entry = [PSCustomObject]@{
     name      = $ModelName
     title     = $Title
     models    = $Models
