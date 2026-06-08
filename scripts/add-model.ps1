@@ -12,10 +12,13 @@ param(
     [string]$Status = "pending"
 )
 
-$models = @(Get-Content models.json -Raw | ConvertFrom-Json)
+$registry = [System.Collections.ArrayList]::new()
+$parsed = Get-Content models.json -Raw | ConvertFrom-Json
+foreach ($item in $parsed) {
+    [void]$registry.Add($item)
+}
 
-$exists = $models | Where-Object { $_.name -eq $ModelName }
-
+$exists = $registry | Where-Object { $_.name -eq $ModelName }
 if ($exists) {
     Write-Host "Model '$ModelName' already registered, skipping."
     exit 0
@@ -37,7 +40,8 @@ $entry = [PSCustomObject]@{
     subdomain = $Subdomain
 }
 
-$models += $entry
-ConvertTo-Json -InputObject @($models) -Depth 5 | Set-Content models.json
+[void]$registry.Add($entry)
+
+ConvertTo-Json -InputObject ($registry.ToArray()) -Depth 10 | Set-Content models.json -Encoding UTF8
 
 Write-Host "Model '$ModelName' registered successfully."
