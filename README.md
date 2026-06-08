@@ -25,27 +25,17 @@ A collection of machine learning and deep learning models trained on big dataset
 ## Repository Structure
 
 ```txt
-machine-learning-models/
-│
-├── models/
-│   ├── machine_learning/
-│   │   ├── linear_regression/
-│   │   ├── logistic_regression/
-│   │   ├── decision_trees/
-│   │   ├── svm/
-│   │   └── clustering/
-│   │
-│   └── deep_learning/
-│       ├── neural_networks/
-│       ├── cnn/
-│       ├── rnn/
-│       ├── transformers/
-│       └── autoencoders/
-│
-├── datasets/
-├── notebooks/
-├── docs/
-└── README.md
+AI-project-collection/
+├── .github/           # GitHub Actions workflows and funding config
+├── .vscode/           # VS Code workspace settings
+├── assets/            # Images and static assets
+├── docs/              # Documentation
+├── k8s/               # Kubernetes manifests and overlays
+├── models/            # Machine learning and deep learning models
+├── scripts/           # Automation and deployment scripts
+├── README.md
+├── models.json        # Model registry/metadata
+└── index.html         # Project landing page
 ```
 
 ## License
